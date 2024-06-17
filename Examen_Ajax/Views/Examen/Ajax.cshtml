@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Ajax";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ajax</h1>
+<div id="container"  style="display: flex;width: 36%;gap: 5vh;">
+    <div style="display: flex;flex-direction: column;gap: 15px;width: 77vh;">
+        <label>Escribe el numero de botones que deseas generar</label>
+        <input type="text" id="valor" />
+        <button id="generate-table">
+            Generar
+        </button>
+    </div>
+
+    <div id="content">
+        
+    </div>
+
+    <div id="coordernadas-btn" style="display: none;">
+        <lable>Coordenada X</lable>
+        <input type="text" id="X" name="coordenada-X" /> 
+        <lable>Coordenada Y</lable>
+        <input type="text" id="Y" name="coordenada-Y" />
+        <br/>
+       
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#generate-table').on('click', function () {
+            var n = parseInt($('#valor').val());
+            var htmlTabla = "<table id='table-content'>";
+            $('#table-content').empty();
+            // Generar filas de tabla
+            for (var i = 0; i < n; i++) {
+                htmlTabla += "<tr>";
+
+                for (var j = 0; j < n; j++) {
+                    htmlTabla += "<td><button type='button' id='btns' style='background-color: #0a7989;border-radius: 7px;border: none;color: white; padding: 9px;' data-i='" + (i + 1 )+ "' data-j='" + (j + 1) + "'>" + "Coordenadas" + "</button></td>";
+                }
+
+                htmlTabla += "</tr>";
+            }
+            htmlTabla += "</table>";
+            $("#content").html(htmlTabla);
+            $('#coordernadas-btn').css('display', 'none');
+        });
+
+        $(document).on('click', '#btns', function () {
+            $('#coordernadas-btn').css('display', 'block');
+            var coordenadaY = $(this).data("i");
+            var coordenadaX = $(this).data("j");
+
+            $('#X').val(coordenadaX);
+            $('#Y').val(coordenadaY); 
+        
+        });
+
+        // $(document).on('click', '#btn-limpiar', function(){
+        //     $('#content').empty();
+        //     $('#coordernadas-btn').empty();
+        //     $('#valor').val("");
+        // })
+    })
+
+</script>
